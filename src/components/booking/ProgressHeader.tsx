@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 import { LogoMark } from "@/components/brand/Logo";
 import { easing } from "@/lib/motion";
@@ -10,7 +10,7 @@ interface ProgressHeaderProps {
   total: number;
   onBack: () => void;
   backLabel?: string;
-  /** True while leaving the flow — shows a spinner so the tap feels acknowledged. */
+  /** True while leaving the flow (full-screen overlay shows). */
   backPending?: boolean;
 }
 
@@ -33,11 +33,7 @@ export function ProgressHeader({
             aria-busy={backPending || undefined}
             className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-2 py-1 text-sm font-semibold text-ink-soft transition-colors hover:text-ink active:bg-muted"
           >
-            {backPending ? (
-              <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-            ) : (
-              <ArrowLeft className="h-4 w-4" aria-hidden />
-            )}
+            <ArrowLeft className="h-4 w-4" aria-hidden />
             {backLabel}
           </motion.button>
           <LogoMark className="h-7 w-7" />

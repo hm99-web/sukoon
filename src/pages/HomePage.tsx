@@ -7,6 +7,7 @@ import { Landing } from "@/components/landing/Landing";
 import { Seo } from "@/components/Seo";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { GradientBackground } from "@/components/ui/gradient-background";
+import { LoadingOverlay } from "@/components/ui/loading-overlay";
 import { faq } from "@/data/content";
 import { faqLd, organizationLd } from "@/lib/structured-data";
 
@@ -56,6 +57,12 @@ export default function HomePage() {
       {/* Backdrop lives here (not inside each view) so switching views doesn't
           tear down and rebuild the expensive blurred layers. */}
       <GradientBackground />
+      {/* Blocks the whole screen while a view switch is in flight so slow
+          phones never look unresponsive and double-taps are impossible. */}
+      <LoadingOverlay
+        show={pending}
+        label={view === "landing" ? "Opening booking…" : "Going home…"}
+      />
       {/* The landing page stays mounted and is merely hidden while booking is
           open. Rebuilding it on "Home" cost 1–2s of blank screen on phones;
           toggling `hidden` is instant. */}
