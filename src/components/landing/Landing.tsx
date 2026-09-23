@@ -60,7 +60,7 @@ function HowItWorks() {
   );
 }
 
-function WhatWeHelpWith({ onBook }: { onBook: () => void }) {
+function WhatWeHelpWith({ onBook, pending }: { onBook: () => void; pending?: boolean }) {
   return (
     <Section id="help">
       <SectionHeading
@@ -85,7 +85,7 @@ function WhatWeHelpWith({ onBook }: { onBook: () => void }) {
         })}
       </RevealGroup>
       <Reveal className="mt-8 text-center">
-        <BookButton size="lg" onBook={onBook}>
+        <BookButton size="lg" onBook={onBook} pending={pending}>
           Book care <ArrowRight className="h-4 w-4" aria-hidden />
         </BookButton>
       </Reveal>
@@ -142,7 +142,7 @@ function Stat({ value, label, icon }: { value: string; label: string; icon?: boo
   );
 }
 
-function Pricing({ onBook }: { onBook: () => void }) {
+function Pricing({ onBook, pending }: { onBook: () => void; pending?: boolean }) {
   return (
     <Section id="pricing">
       <SectionHeading
@@ -193,7 +193,7 @@ function Pricing({ onBook }: { onBook: () => void }) {
         <p className="flex items-center gap-2 rounded-full bg-secondary-soft px-4 py-2 text-sm font-semibold text-secondary-ink">
           <ShieldCheck className="h-4 w-4" aria-hidden /> {payAfterPromise}
         </p>
-        <BookButton size="lg" onBook={onBook}>
+        <BookButton size="lg" onBook={onBook} pending={pending}>
           Book care <ArrowRight className="h-4 w-4" aria-hidden />
         </BookButton>
       </Reveal>
@@ -246,7 +246,7 @@ function Caregivers() {
   );
 }
 
-function FinalCta({ onBook }: { onBook: () => void }) {
+function FinalCta({ onBook, pending }: { onBook: () => void; pending?: boolean }) {
   return (
     <Section>
       <Reveal className="relative overflow-hidden rounded-[2.25rem] bg-gradient-to-b from-primary to-primary-deep px-6 py-14 text-center shadow-lift sm:px-10">
@@ -259,7 +259,7 @@ function FinalCta({ onBook }: { onBook: () => void }) {
             Book in two minutes. We'll call to confirm and personally assign your nurse or caregiver. You pay only after you approve them.
           </p>
           <div className="mt-7 flex justify-center">
-            <BookButton variant="secondary" size="lg" onBook={onBook} className="shadow-lift">
+            <BookButton variant="secondary" size="lg" onBook={onBook} pending={pending} className="shadow-lift">
               Book care <ArrowRight className="h-4 w-4" aria-hidden />
             </BookButton>
           </div>
@@ -290,7 +290,7 @@ function Footer() {
   );
 }
 
-function MobileBookBar({ onBook }: { onBook: () => void }) {
+function MobileBookBar({ onBook, pending }: { onBook: () => void; pending?: boolean }) {
   const { scrollY } = useScroll();
   const [show, setShow] = useState(false);
   useMotionValueEvent(scrollY, "change", (y) => setShow(y > 560));
@@ -308,7 +308,7 @@ function MobileBookBar({ onBook }: { onBook: () => void }) {
             <span className="flex items-center gap-2 text-sm font-semibold text-ink">
               <LogoMark className="h-6 w-6" /> Pay only after care
             </span>
-            <BookButton size="sm" onBook={onBook}>
+            <BookButton size="sm" onBook={onBook} pending={pending}>
               Book care
             </BookButton>
           </div>
@@ -318,16 +318,16 @@ function MobileBookBar({ onBook }: { onBook: () => void }) {
   );
 }
 
-export function Landing({ onBook }: { onBook: () => void }) {
+export function Landing({ onBook, pending }: { onBook: () => void; pending?: boolean }) {
   return (
     <div className="relative min-h-dvh overflow-x-clip">
-      <Header onBook={onBook} />
+      <Header onBook={onBook} pending={pending} />
       <main>
-        <Hero onBook={onBook} />
+        <Hero onBook={onBook} pending={pending} />
         <HowItWorks />
-        <WhatWeHelpWith onBook={onBook} />
+        <WhatWeHelpWith onBook={onBook} pending={pending} />
         <WhyTrust />
-        <Pricing onBook={onBook} />
+        <Pricing onBook={onBook} pending={pending} />
         <Caregivers />
         <Section id="faq" className="!py-14 sm:!py-20">
           <SectionHeading
@@ -337,10 +337,10 @@ export function Landing({ onBook }: { onBook: () => void }) {
           />
           <Faq />
         </Section>
-        <FinalCta onBook={onBook} />
+        <FinalCta onBook={onBook} pending={pending} />
       </main>
       <Footer />
-      <MobileBookBar onBook={onBook} />
+      <MobileBookBar onBook={onBook} pending={pending} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 
 import { LogoMark } from "@/components/brand/Logo";
 import { easing } from "@/lib/motion";
@@ -10,6 +10,8 @@ interface ProgressHeaderProps {
   total: number;
   onBack: () => void;
   backLabel?: string;
+  /** True while leaving the flow — shows a spinner so the tap feels acknowledged. */
+  backPending?: boolean;
 }
 
 export function ProgressHeader({
@@ -17,20 +19,27 @@ export function ProgressHeader({
   total,
   onBack,
   backLabel = "Back",
+  backPending,
 }: ProgressHeaderProps) {
   const pct = (step / total) * 100;
   return (
     <div className="sticky top-0 z-30 -mx-5 mb-1 px-5 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))]">
       <div className="glass -mx-5 mb-3 border-b border-line/70 px-5 pb-3 pt-3">
         <div className="flex items-center justify-between gap-3">
-          <button
+          <motion.button
             type="button"
             onClick={onBack}
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-2 py-1 text-sm font-semibold text-ink-soft transition-colors hover:text-ink"
+            whileTap={{ scale: 0.94 }}
+            aria-busy={backPending || undefined}
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-2 py-1 text-sm font-semibold text-ink-soft transition-colors hover:text-ink active:bg-muted"
           >
-            <ArrowLeft className="h-4 w-4" aria-hidden />
+            {backPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+            ) : (
+              <ArrowLeft className="h-4 w-4" aria-hidden />
+            )}
             {backLabel}
-          </button>
+          </motion.button>
           <LogoMark className="h-7 w-7" />
           <span className="min-h-11 content-center text-sm font-semibold tabular-nums text-ink-soft">
             Step {step} <span className="text-ink-faint">of {total}</span>

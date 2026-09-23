@@ -15,7 +15,7 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: easing.calmOut } },
 };
 
-export function Hero({ onBook }: { onBook: () => void }) {
+export function Hero({ onBook, pending }: { onBook: () => void; pending?: boolean }) {
   const scrollToHow = () =>
     document.getElementById("how")?.scrollIntoView({ behavior: "smooth" });
 
@@ -53,7 +53,7 @@ export function Hero({ onBook }: { onBook: () => void }) {
           </motion.p>
 
           <motion.div variants={item} className="mt-7 flex w-full flex-col items-center gap-3">
-            <BookButton variant="secondary" size="lg" block onBook={onBook} className="text-primary-ink shadow-lift">
+            <BookButton variant="secondary" size="lg" block onBook={onBook} pending={pending} className="text-primary-ink shadow-lift">
               Book care
               <ArrowRight className="h-4 w-4" aria-hidden />
             </BookButton>

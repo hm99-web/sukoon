@@ -33,7 +33,14 @@ function validateContact(draft: ReturnType<typeof useBooking>["draft"]): Contact
   return e;
 }
 
-export function BookingFlow({ onExit }: { onExit: () => void }) {
+export function BookingFlow({
+  onExit,
+  exiting,
+}: {
+  onExit: () => void;
+  /** True while the landing view is being restored after "Home". */
+  exiting?: boolean;
+}) {
   const reduce = useReducedMotion();
   const { draft, persistContact, reset } = useBooking();
   const [step, setStep] = useState(0);
@@ -132,6 +139,7 @@ export function BookingFlow({ onExit }: { onExit: () => void }) {
           total={TOTAL}
           onBack={back}
           backLabel={step === 0 ? "Home" : "Back"}
+          backPending={exiting && step === 0}
         />
 
         {/* -mx-2/px-2: widen the clip box outward so full-width inputs'

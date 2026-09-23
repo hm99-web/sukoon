@@ -1,4 +1,5 @@
 import { motion, type HTMLMotionProps } from "framer-motion";
+import { Loader2 } from "lucide-react";
 import type { VariantProps } from "class-variance-authority";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -8,6 +9,8 @@ interface BookButtonProps
   extends Omit<HTMLMotionProps<"a">, "children" | "href" | "onClick">,
     VariantProps<typeof buttonVariants> {
   onBook: () => void;
+  /** True while the booking view is being prepared — shows a spinner. */
+  pending?: boolean;
   children?: React.ReactNode;
 }
 
@@ -23,6 +26,7 @@ export function BookButton({
   size,
   block,
   onBook,
+  pending,
   children,
   ...props
 }: BookButtonProps) {
@@ -38,8 +42,10 @@ export function BookButton({
         e.preventDefault();
         onBook();
       }}
+      aria-busy={pending || undefined}
       {...props}
     >
+      {pending && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
       {children}
     </motion.a>
   );

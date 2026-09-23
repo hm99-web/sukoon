@@ -5,7 +5,7 @@ import { BookButton } from "@/components/landing/BookButton";
 import { Logo } from "@/components/brand/Logo";
 import { cn } from "@/lib/utils";
 
-export function Header({ onBook }: { onBook: () => void }) {
+export function Header({ onBook, pending }: { onBook: () => void; pending?: boolean }) {
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 12));
@@ -38,7 +38,7 @@ export function Header({ onBook }: { onBook: () => void }) {
             </a>
           ))}
         </nav>
-        <BookButton size="sm" onBook={onBook} className="shadow-soft">
+        <BookButton size="sm" onBook={onBook} pending={pending} className="shadow-soft">
           Book care
         </BookButton>
       </div>
