@@ -1,8 +1,8 @@
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
 
+import { BookButton } from "@/components/landing/BookButton";
 import { Logo } from "@/components/brand/Logo";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function Header({ onBook }: { onBook: () => void }) {
@@ -38,9 +38,9 @@ export function Header({ onBook }: { onBook: () => void }) {
             </a>
           ))}
         </nav>
-        <Button size="sm" onClick={onBook} className="shadow-soft">
+        <BookButton size="sm" onBook={onBook} className="shadow-soft">
           Book care
-        </Button>
+        </BookButton>
       </div>
     </motion.header>
   );

@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Heart } from "lucide-react";
 
+import { BookButton } from "@/components/landing/BookButton";
 import { PlayfulNurse } from "@/components/hero/PlayfulNurse";
-import { Button } from "@/components/ui/button";
 import { heroTrustline, trustBadges } from "@/data/content";
 import { easing } from "@/lib/motion";
 
@@ -53,10 +53,10 @@ export function Hero({ onBook }: { onBook: () => void }) {
           </motion.p>
 
           <motion.div variants={item} className="mt-7 flex w-full flex-col items-center gap-3">
-            <Button variant="secondary" size="lg" block onClick={onBook} className="text-primary-ink shadow-lift">
+            <BookButton variant="secondary" size="lg" block onBook={onBook} className="text-primary-ink shadow-lift">
               Book care
               <ArrowRight className="h-4 w-4" aria-hidden />
-            </Button>
+            </BookButton>
             <button
               type="button"
               onClick={scrollToHow}

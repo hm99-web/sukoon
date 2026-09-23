@@ -9,7 +9,6 @@ import { DatesStep } from "@/components/booking/steps/DatesStep";
 import { NeedsStep } from "@/components/booking/steps/NeedsStep";
 import { PreferencesStep } from "@/components/booking/steps/PreferencesStep";
 import { ReviewStep } from "@/components/booking/steps/ReviewStep";
-import { GradientBackground } from "@/components/ui/gradient-background";
 import { bookingWhatsappHref, deliverBooking } from "@/lib/booking";
 import { stepVariants } from "@/lib/motion";
 import { toISODate, useBooking } from "@/hooks/useBooking";
@@ -110,7 +109,6 @@ export function BookingFlow({ onExit }: { onExit: () => void }) {
   if (confirmed) {
     return (
       <div className="relative min-h-dvh">
-        <GradientBackground />
         <Confirmation
           bookingRef={confirmed.ref}
           sameDay={confirmed.sameDay}
@@ -128,7 +126,6 @@ export function BookingFlow({ onExit }: { onExit: () => void }) {
 
   return (
     <div className="relative min-h-dvh pb-40">
-      <GradientBackground />
       <div className="mx-auto max-w-lg px-5">
         <ProgressHeader
           step={step + 1}

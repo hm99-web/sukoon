@@ -2,6 +2,7 @@ import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-
 import { ArrowRight, Quote, ShieldCheck, Star } from "lucide-react";
 import { useState } from "react";
 
+import { BookButton } from "@/components/landing/BookButton";
 import { Logo, LogoMark } from "@/components/brand/Logo";
 import { Faq } from "@/components/landing/Faq";
 import { Header } from "@/components/landing/Header";
@@ -14,8 +15,6 @@ import {
   SectionHeading,
 } from "@/components/landing/reveal";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { GradientBackground } from "@/components/ui/gradient-background";
 import { brand } from "@/lib/brand";
 import { caregivers, howItWorks, whoCaregiversNote, whyTrust } from "@/data/content";
 import { payAfterPromise, shiftTiers } from "@/data/pricing";
@@ -86,9 +85,9 @@ function WhatWeHelpWith({ onBook }: { onBook: () => void }) {
         })}
       </RevealGroup>
       <Reveal className="mt-8 text-center">
-        <Button size="lg" onClick={onBook}>
+        <BookButton size="lg" onBook={onBook}>
           Book care <ArrowRight className="h-4 w-4" aria-hidden />
-        </Button>
+        </BookButton>
       </Reveal>
     </Section>
   );
@@ -194,9 +193,9 @@ function Pricing({ onBook }: { onBook: () => void }) {
         <p className="flex items-center gap-2 rounded-full bg-secondary-soft px-4 py-2 text-sm font-semibold text-secondary-ink">
           <ShieldCheck className="h-4 w-4" aria-hidden /> {payAfterPromise}
         </p>
-        <Button size="lg" onClick={onBook}>
+        <BookButton size="lg" onBook={onBook}>
           Book care <ArrowRight className="h-4 w-4" aria-hidden />
-        </Button>
+        </BookButton>
       </Reveal>
     </Section>
   );
@@ -260,9 +259,9 @@ function FinalCta({ onBook }: { onBook: () => void }) {
             Book in two minutes. We'll call to confirm and personally assign your nurse or caregiver. You pay only after you approve them.
           </p>
           <div className="mt-7 flex justify-center">
-            <Button variant="secondary" size="lg" onClick={onBook} className="shadow-lift">
+            <BookButton variant="secondary" size="lg" onBook={onBook} className="shadow-lift">
               Book care <ArrowRight className="h-4 w-4" aria-hidden />
-            </Button>
+            </BookButton>
           </div>
           <p className="mt-4 text-sm text-white/75">No payment today · Cancel anytime before care begins</p>
         </div>
@@ -309,9 +308,9 @@ function MobileBookBar({ onBook }: { onBook: () => void }) {
             <span className="flex items-center gap-2 text-sm font-semibold text-ink">
               <LogoMark className="h-6 w-6" /> Pay only after care
             </span>
-            <Button size="sm" onClick={onBook}>
+            <BookButton size="sm" onBook={onBook}>
               Book care
-            </Button>
+            </BookButton>
           </div>
         </motion.div>
       )}
@@ -322,7 +321,6 @@ function MobileBookBar({ onBook }: { onBook: () => void }) {
 export function Landing({ onBook }: { onBook: () => void }) {
   return (
     <div className="relative min-h-dvh overflow-x-clip">
-      <GradientBackground />
       <Header onBook={onBook} />
       <main>
         <Hero onBook={onBook} />

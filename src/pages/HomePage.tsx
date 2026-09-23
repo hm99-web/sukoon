@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -6,6 +6,7 @@ import { BookingFlow } from "@/components/booking/BookingFlow";
 import { Landing } from "@/components/landing/Landing";
 import { Seo } from "@/components/Seo";
 import { SiteFooter } from "@/components/site/SiteFooter";
+import { GradientBackground } from "@/components/ui/gradient-background";
 import { faq } from "@/data/content";
 import { faqLd, organizationLd } from "@/lib/structured-data";
 
@@ -39,30 +40,33 @@ export default function HomePage() {
         path="/"
         jsonLd={[organizationLd(), faqLd(faq)]}
       />
-      <AnimatePresence mode="wait">
-        {view === "landing" ? (
-          <motion.div
-            key="landing"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            <Landing onBook={openBooking} />
-            <SiteFooter />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="booking"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            <BookingFlow onExit={closeBooking} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Backdrop lives here (not inside each view) so switching views doesn't
+          tear down and rebuild the expensive blurred layers. */}
+      <GradientBackground />
+      {/* Views swap in the same commit — no exit animation, no "wait" mode.
+          The old approach (fade out → unmount → mount → fade in) left the
+          screen blank for 1–2s on mid-range phones. The new view just fades
+          in quickly from a slightly-visible state so it never reads as empty. */}
+      {view === "landing" ? (
+        <motion.div
+          key="landing"
+          initial={{ opacity: 0.4 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.18 }}
+        >
+          <Landing onBook={openBooking} />
+          <SiteFooter />
+        </motion.div>
+      ) : (
+        <motion.div
+          key="booking"
+          initial={{ opacity: 0.4, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.18 }}
+        >
+          <BookingFlow onExit={closeBooking} />
+        </motion.div>
+      )}
     </>
   );
 }
