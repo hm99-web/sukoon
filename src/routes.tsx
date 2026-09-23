@@ -1,4 +1,5 @@
-import { Outlet } from "react-router-dom";
+import { useEffect, useLayoutEffect } from "react";
+import { Outlet, useLocation, useNavigationType } from "react-router-dom";
 import type { RouteRecord } from "vite-react-ssg";
 
 import { BookingProvider } from "@/hooks/useBooking";
@@ -8,9 +9,29 @@ import HomePage from "@/pages/HomePage";
 import PrivacyPage from "@/pages/PrivacyPage";
 import TermsPage from "@/pages/TermsPage";
 
+/**
+ * Client-side navigations keep the previous scroll position, so tapping a
+ * footer link (e.g. Privacy Policy) opened the new page still scrolled to
+ * the bottom. Jump to the top on every push/replace navigation; leave
+ * back/forward (POP) alone so the browser can restore where the user was.
+ */
+// useLayoutEffect warns during the SSG prerender (no DOM); fall back there.
+const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+  const navType = useNavigationType();
+  useIsoLayoutEffect(() => {
+    if (navType === "POP" || hash) return;
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [pathname, hash, navType]);
+  return null;
+}
+
 function RootLayout() {
   return (
     <BookingProvider>
+      <ScrollToTop />
       <Outlet />
     </BookingProvider>
   );
