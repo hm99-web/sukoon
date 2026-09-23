@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  * {
+    @apply border-line;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100dvh;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-ink;
+    letter-spacing: -0.005em;
+  }
+
+  /* Accessible, on-brand focus ring for keyboard users */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary/70 ring-offset-2 ring-offset-canvas;
+  }
+
+  /* Nicer text selection */
+  ::selection {
+    background: rgba(255, 122, 51, 0.22);
+    color: #26262b;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* A soft, warm glow of orange + yellow blobs */
+  .aurora {
+    background:
+      radial-gradient(45% 40% at 18% 18%, rgba(255, 194, 75, 0.40), transparent 70%),
+      radial-gradient(48% 42% at 84% 22%, rgba(255, 122, 46, 0.34), transparent 70%),
+      radial-gradient(52% 46% at 82% 92%, rgba(255, 176, 32, 0.30), transparent 70%),
+      radial-gradient(46% 42% at 14% 88%, rgba(251, 122, 46, 0.28), transparent 70%);
+  }
+
+  .card-hairline {
+    @apply rounded-3xl border border-line bg-surface shadow-card;
+  }
+
+  /* Light frosted glass for floating bars / popovers */
+  .glass {
+    background: rgba(255, 250, 242, 0.82);
+    backdrop-filter: saturate(1.4) blur(16px);
+    -webkit-backdrop-filter: saturate(1.4) blur(16px);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+@layer utilities {
+  /* Respect the iOS home indicator for the sticky booking CTA */
+  .pb-safe {
+    padding-bottom: calc(1rem + var(--safe-bottom));
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

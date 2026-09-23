@@ -1,0 +1,5 @@
+# Sukoon — allow all crawlers
+User-agent: *
+Allow: /
+
+Sitemap: https://sukoonseva.com/sitemap.xml
